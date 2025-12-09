@@ -1,5 +1,5 @@
 {
-  "name": "Copy of AI Materials Lab Copilot",
-  "description": "An advanced AI Copilot for materials scientists to analyze multi-modal data (SEM/TEM/XRD), optimize experiments, and generate lab reports.",
+  "name": "AI Lab Assistant for Materials Science",
+  "description": "Expert AI assistant for analyzing material science data (SEM, XRD, spectra), diagnosing defects, and optimizing experimental protocols.",
   "requestFramePermissions": []
 }

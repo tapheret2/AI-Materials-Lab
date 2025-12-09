@@ -120,14 +120,14 @@ const App: React.FC = () => {
             <div className="bg-teal-600 p-2 rounded-lg shadow-sm">
               <Microscope className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-xl font-bold text-slate-800 tracking-tight">AI Materials Lab Copilot</h1>
+            <h1 className="text-xl font-bold text-slate-800 tracking-tight">AI Materials Lab Assistant</h1>
           </div>
           <div className="flex items-center gap-4 text-sm text-slate-500">
             <span className="hidden md:inline">Powered by Gemini 2.5</span>
             <div className="w-px h-4 bg-slate-300 hidden md:block"></div>
             <span className="font-medium text-teal-700 bg-teal-50 px-3 py-1 rounded-full text-xs border border-teal-100 flex items-center gap-1">
               <FlaskConical className="w-3 h-3" />
-              Multi-Modal Ready
+              Scientific Analysis
             </span>
           </div>
         </div>
@@ -206,12 +206,12 @@ const App: React.FC = () => {
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Paste experimental conditions, expected phases, or describe previous attempts to enable Optimization Mode..."
+                  placeholder="Paste experimental conditions, expected phases, or describe previous attempts to enable optimization and protocol revision..."
                   className="w-full h-40 p-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none resize-none text-sm text-slate-700 shadow-sm placeholder:text-slate-400"
                 ></textarea>
                 <div className="mt-2 text-xs text-slate-500 flex items-start gap-1">
                   <Info className="w-3 h-3 mt-0.5 flex-shrink-0" />
-                  Tip: Provide condition + outcome pairs for the AI to suggest optimizations.
+                  Tip: Provide condition + outcome pairs for better optimization suggestions.
                 </div>
               </div>
 
@@ -241,7 +241,7 @@ const App: React.FC = () => {
                 ) : (
                   <>
                     <Microscope className="w-5 h-5" />
-                    Analyze & Generate Report
+                    Analyze & Optimize
                   </>
                 )}
               </button>
@@ -255,7 +255,7 @@ const App: React.FC = () => {
             <div className="p-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
               <h2 className="font-semibold text-slate-700 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-teal-600" />
-                Copilot Analysis
+                Analysis Results
               </h2>
               {status === AnalysisStatus.SUCCESS && (
                 <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full border border-green-200">
@@ -271,9 +271,9 @@ const App: React.FC = () => {
                     <FlaskConical className="w-12 h-12 text-slate-300" />
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-medium text-slate-600">AI Materials Copilot Ready</p>
+                    <p className="text-lg font-medium text-slate-600">AI Lab Assistant Ready</p>
                     <p className="text-sm max-w-xs mx-auto mt-1">
-                      Upload SEM, XRD, or Plots. Provide context for optimization or report generation.
+                      Upload SEM, XRD, or Plots. Provide context for interpretation and protocol optimization.
                     </p>
                   </div>
                 </div>
@@ -309,10 +309,10 @@ const App: React.FC = () => {
                   <div className="bg-teal-50/50 p-4 rounded-lg mb-6 border border-teal-100">
                     <h3 className="text-teal-900 font-semibold mb-2 flex items-center gap-2">
                       <FileText className="w-4 h-4" /> 
-                      Copilot Summary
+                      Assistant Summary
                     </h3>
                     <p className="text-sm text-teal-800">
-                      Analysis complete. Review the structured report below for interpretation, defects, and optimization steps.
+                      Analysis complete. Review the structured report below for scientific interpretation, potential issues, and optimization steps.
                     </p>
                   </div>
                   <MarkdownViewer content={result} />
@@ -334,7 +334,7 @@ const App: React.FC = () => {
 
       <footer className="bg-white border-t border-slate-200 mt-auto py-6">
         <div className="max-w-7xl mx-auto px-4 text-center text-slate-400 text-sm">
-          <p>© {new Date().getFullYear()} AI Materials Lab Copilot. Use results for reference only.</p>
+          <p>© {new Date().getFullYear()} AI Materials Lab Assistant. Use results for reference only.</p>
           <p className="mt-1 text-xs">Always verify experimental safety protocols with your institution.</p>
         </div>
       </footer>
