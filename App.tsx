@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { Upload, FileText, FlaskConical, AlertCircle, CheckCircle2, Loader2, Microscope, X, Info, Layers, Trash2 } from 'lucide-react';
+import { Upload, FileText, FlaskConical, AlertCircle, CheckCircle2, Loader2, Microscope, Trash2, Layers, Info, ScanSearch } from 'lucide-react';
 import { analyzeMaterialData } from './services/gemini';
 import { AnalysisStatus, FileData } from './types';
 import { MarkdownViewer } from './components/MarkdownViewer';
@@ -91,7 +91,7 @@ const App: React.FC = () => {
 
   const handleAnalyze = async () => {
     if (files.length === 0 && !notes.trim()) {
-      setErrorMsg("Please provide experimental images or notes to analyze.");
+      setErrorMsg("Please provide figures or notes to perform analysis.");
       return;
     }
 
@@ -120,14 +120,14 @@ const App: React.FC = () => {
             <div className="bg-teal-600 p-2 rounded-lg shadow-sm">
               <Microscope className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-xl font-bold text-slate-800 tracking-tight">AI Materials Lab Assistant</h1>
+            <h1 className="text-xl font-bold text-slate-800 tracking-tight">AI Lab Assistant for Materials Science</h1>
           </div>
           <div className="flex items-center gap-4 text-sm text-slate-500">
-            <span className="hidden md:inline">Powered by Gemini 2.5</span>
+            <span className="hidden md:inline">Powered by Gemini 3 Pro</span>
             <div className="w-px h-4 bg-slate-300 hidden md:block"></div>
             <span className="font-medium text-teal-700 bg-teal-50 px-3 py-1 rounded-full text-xs border border-teal-100 flex items-center gap-1">
-              <FlaskConical className="w-3 h-3" />
-              Scientific Analysis
+              <ScanSearch className="w-3 h-3" />
+              Data Extraction & Writing
             </span>
           </div>
         </div>
@@ -143,9 +143,9 @@ const App: React.FC = () => {
             <div className="p-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
               <h2 className="font-semibold text-slate-700 flex items-center gap-2">
                 <Upload className="w-4 h-4 text-teal-600" />
-                Input Data
+                Figures & Data
               </h2>
-              <span className="text-xs text-slate-400">SEM, TEM, XRD, Plots</span>
+              <span className="text-xs text-slate-400">XRD, Raman, I-V, SEM</span>
             </div>
             
             <div className="p-6">
@@ -160,7 +160,7 @@ const App: React.FC = () => {
                   <Layers className="w-6 h-6 text-slate-400 group-hover:text-teal-600" />
                 </div>
                 <p className="text-slate-900 font-medium mb-1">Click to upload or drag & drop</p>
-                <p className="text-slate-500 text-xs">Supports multiple files (PNG, JPG) up to {MAX_FILES} total</p>
+                <p className="text-slate-500 text-xs">Upload plots for quantitative extraction ({MAX_FILES} max)</p>
                 <input 
                   type="file" 
                   ref={fileInputRef} 
@@ -201,17 +201,17 @@ const App: React.FC = () => {
               <div className="mt-6">
                 <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
                   <FileText className="w-4 h-4 text-teal-600" />
-                  Experiment Notes & Parameters
+                  Experimental Context
                 </label>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Paste experimental conditions, expected phases, or describe previous attempts to enable optimization and protocol revision..."
+                  placeholder="Provide context for the figures (e.g. 'Fig 1a is Pt/TiO2/Pt', 'Scan rate: 100 mV/s'). The AI will analyze the figure assuming NO paper exists yet."
                   className="w-full h-40 p-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none resize-none text-sm text-slate-700 shadow-sm placeholder:text-slate-400"
                 ></textarea>
                 <div className="mt-2 text-xs text-slate-500 flex items-start gap-1">
                   <Info className="w-3 h-3 mt-0.5 flex-shrink-0" />
-                  Tip: Provide condition + outcome pairs for better optimization suggestions.
+                  Tip: Quantitative values are only extracted if clearly visible.
                 </div>
               </div>
 
@@ -236,12 +236,12 @@ const App: React.FC = () => {
                 {status === AnalysisStatus.ANALYZING ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    Processing Data...
+                    Extracting Data...
                   </>
                 ) : (
                   <>
-                    <Microscope className="w-5 h-5" />
-                    Analyze & Optimize
+                    <ScanSearch className="w-5 h-5" />
+                    Extract Data & Write Draft
                   </>
                 )}
               </button>
@@ -255,11 +255,11 @@ const App: React.FC = () => {
             <div className="p-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
               <h2 className="font-semibold text-slate-700 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-teal-600" />
-                Analysis Results
+                Analysis & Draft
               </h2>
               {status === AnalysisStatus.SUCCESS && (
                 <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full border border-green-200">
-                  Ready
+                  Completed
                 </span>
               )}
             </div>
@@ -273,7 +273,7 @@ const App: React.FC = () => {
                   <div className="text-center">
                     <p className="text-lg font-medium text-slate-600">AI Lab Assistant Ready</p>
                     <p className="text-sm max-w-xs mx-auto mt-1">
-                      Upload SEM, XRD, or Plots. Provide context for interpretation and protocol optimization.
+                      Upload experimental figures. The system will extract quantitative data and generate a manuscript-style discussion.
                     </p>
                   </div>
                 </div>
@@ -288,9 +288,9 @@ const App: React.FC = () => {
                     </div>
                   </div>
                   <div className="text-center space-y-2">
-                    <p className="text-lg font-medium text-slate-700">Synthesizing Results...</p>
+                    <p className="text-lg font-medium text-slate-700">Analyzing Figures...</p>
                     <p className="text-sm text-slate-500 animate-pulse">
-                      Analyzing morphology, phases, and trends
+                      Reading plots, identifying peaks, and drafting discussion
                     </p>
                   </div>
                 </div>
@@ -300,7 +300,7 @@ const App: React.FC = () => {
                 <div className="h-full flex flex-col items-center justify-center text-red-500">
                   <AlertCircle className="w-12 h-12 mb-4" />
                   <p className="font-medium">Analysis Failed</p>
-                  <p className="text-sm mt-2 text-slate-600">Please check your internet connection or API key configuration.</p>
+                  <p className="text-sm mt-2 text-slate-600">Please check your internet connection or try again.</p>
                 </div>
               )}
 
@@ -309,10 +309,10 @@ const App: React.FC = () => {
                   <div className="bg-teal-50/50 p-4 rounded-lg mb-6 border border-teal-100">
                     <h3 className="text-teal-900 font-semibold mb-2 flex items-center gap-2">
                       <FileText className="w-4 h-4" /> 
-                      Assistant Summary
+                      Generated Analysis
                     </h3>
                     <p className="text-sm text-teal-800">
-                      Analysis complete. Review the structured report below for scientific interpretation, potential issues, and optimization steps.
+                      Quantitative values are extracted directly from the image. Review the confidence levels before use.
                     </p>
                   </div>
                   <MarkdownViewer content={result} />
@@ -322,7 +322,7 @@ const App: React.FC = () => {
                       onClick={() => navigator.clipboard.writeText(result)}
                       className="text-sm text-slate-500 hover:text-teal-600 transition-colors flex items-center gap-1"
                     >
-                      <FileText className="w-4 h-4" /> Copy Full Report
+                      <FileText className="w-4 h-4" /> Copy Text
                     </button>
                   </div>
                 </div>
@@ -334,8 +334,7 @@ const App: React.FC = () => {
 
       <footer className="bg-white border-t border-slate-200 mt-auto py-6">
         <div className="max-w-7xl mx-auto px-4 text-center text-slate-400 text-sm">
-          <p>© {new Date().getFullYear()} AI Materials Lab Assistant. Use results for reference only.</p>
-          <p className="mt-1 text-xs">Always verify experimental safety protocols with your institution.</p>
+          <p>© {new Date().getFullYear()} AI Lab Assistant for Materials Science. Verify all extracted values.</p>
         </div>
       </footer>
     </div>

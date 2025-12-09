@@ -1,5 +1,5 @@
 {
   "name": "AI Lab Assistant for Materials Science",
-  "description": "Expert AI assistant for analyzing material science data (SEM, XRD, spectra), diagnosing defects, and optimizing experimental protocols.",
+  "description": "Advanced tool for extracting quantitative data from experimental figures and generating peer-reviewed style manuscript discussions.",
   "requestFramePermissions": []
 }
